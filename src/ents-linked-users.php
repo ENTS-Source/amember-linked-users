@@ -12,7 +12,8 @@ class Am_Plugin_EntsLinkedUsers extends Am_Plugin
 
     protected $_table;
 
-    function getLinkedUsers($userId) {
+    function getLinkedUsers($userId)
+    {
         return $this->getDi()->db->select("SELECT * FROM ?_user WHERE user_id in (SELECT user_id_a AS user_id FROM ?_user_links WHERE user_id_b = ?d UNION SELECT user_id_b AS user_id FROM ?_user_links WHERE user_id_a = ?d)", $userId, $userId);
     }
 
@@ -78,7 +79,7 @@ class AdminEntsLinkedUsersController extends Am_Mvc_Controller
         $this->view->content .= "<h1>" . ___("Linked Users") . "</h1>";
         if (count($linkedUsers) > 0) {
             $this->view->content .= "<ul>";
-            foreach($linkedUsers as $user) {
+            foreach ($linkedUsers as $user) {
                 $this->view->content .= "<li style='margin-left: 20px; list-style: disc'>${user['name_f']} ${user['name_l']} (Fob: ${user['fob']})</li>";
             }
             $this->view->content .= "</ul>";
@@ -90,12 +91,14 @@ class AdminEntsLinkedUsersController extends Am_Mvc_Controller
     }
 }
 
-class UserLink extends Am_Record {
+class UserLink extends Am_Record
+{
     protected $_key = 'link_id';
     protected $_table = '?_user_links';
 }
 
-class UserLinkTable extends Am_Table {
+class UserLinkTable extends Am_Table
+{
     protected $_key = 'link_id';
     protected $_table = '?_user_links';
     protected $_recordClass = 'UserLink';
